@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connection {
-  private static final String URL = "jdbc:mysql://localhost:3306/Crud"; // 127.0.0.1
-  private static final String USER = "root";
-  private static final String PASSWORD = "AlzamorA109";
+  private static final String URL = "jdbc:mysql://blackloop.mssql.somee.com/blackloop"; // 127.0.0.1
+  private static final String USER = "milc3sar_SQLLogin_1";
+  private static final String PASSWORD = "x7os23v8nz";
 
   public static java.sql.Connection getConnection() throws SQLException {
     return DriverManager.getConnection(URL, USER, PASSWORD);
