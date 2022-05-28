@@ -2,6 +2,7 @@ package org.blackloop.crud.persistence.dao;
 
 import org.blackloop.crud.commons.dto.UsuarioDTO;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,5 +54,56 @@ public class UsuarioDao {
 
     return usuariosList;
   }
-  
+  public UsuarioDTO findById(int id){
+    UsuarioDTO usuario = null;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+
+    try{
+      String query = "select id, username, password, email from usuario where id = ?";
+      connection = org.blackloop.crud.persistence.Connection.getConnection();
+      preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setInt(1, id);
+      resultSet = preparedStatement.executeQuery();
+
+      if(resultSet.next()){
+        usuario = new UsuarioDTO();
+        usuario.setId(resultSet.getInt("id"));
+        usuario.setUsername(resultSet.getString("username"));
+        usuario.setPassword(resultSet.getString("password"));
+        usuario.setEmail(resultSet.getString("email"));
+      }
+    } catch (SQLException e){
+      e.printStackTrace();
+    } finally{
+      org.blackloop.crud.persistence.Connection.close(resultSet);
+      org.blackloop.crud.persistence.Connection.close(preparedStatement);
+      org.blackloop.crud.persistence.Connection.close(connection);
+    }
+    return usuario;
+  }
+
+  public int insert(UsuarioDTO usuario){
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    int rows = 0;
+
+    try{
+      String query = "insert into usuario(username, password, email) values (?, ?, ?)";
+      connection = org.blackloop.crud.persistence.Connection.getConnection();
+      preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setString(1, usuario.getUsername());
+      preparedStatement.setString(2, usuario.getPassword());
+      preparedStatement.setString(3, usuario.getEmail());
+      rows = preparedStatement.executeUpdate();
+    } catch (SQLException e){
+      e.printStackTrace();
+    } finally{
+      org.blackloop.crud.persistence.Connection.close(preparedStatement);
+      org.blackloop.crud.persistence.Connection.close(connection);
+    }
+    return rows;
+  }
 }

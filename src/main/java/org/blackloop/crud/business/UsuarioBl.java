@@ -11,4 +11,12 @@ public class UsuarioBl {
     public List<UsuarioDTO> getAllUsuarios(){
         return dao.findAll();
     }
+
+    public UsuarioDTO findById(int id){
+        return dao.findById(id);
+    }
+
+    public boolean insert(UsuarioDTO usuario){
+        return dao.insert(usuario) != 0;
+    }
 }
