@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connection {
-  private static final String URL = "jdbc:mysql://blackloop.mssql.somee.com"; // 127.0.0.1
+  private static final String URL = "jdbc:mysql://blackloop.mssql.somee.com/blackloop"; // 127.0.0.1
   private static final String USER = "milc3sar_SQLLogin_1";
   private static final String PASSWORD = "x7os23v8nz";
 
