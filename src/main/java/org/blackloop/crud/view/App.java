@@ -1,6 +1,8 @@
 package org.blackloop.crud.view;
 
+import org.blackloop.crud.business.PersonaBl;
 import org.blackloop.crud.business.UsuarioBl;
+import org.blackloop.crud.commons.dto.PersonaDTO;
 import org.blackloop.crud.commons.dto.UsuarioDTO;
 
 import java.util.ArrayList;
@@ -20,5 +22,10 @@ public class App {
       System.out.println("Usuario encontrado:");
       System.out.println(usuario);
     } else System.out.println("No se encontro el usuario");
+    PersonaBl personaBl = new PersonaBl();
+    List<PersonaDTO> personas = personaBl.getAllPersonas();
+    for(PersonaDTO persona : personas){
+      System.out.println(personas.toString());
+    }
   }
 }
