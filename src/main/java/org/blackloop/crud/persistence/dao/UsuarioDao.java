@@ -87,7 +87,6 @@ public class UsuarioDao {
   public int insert(UsuarioDTO usuario){
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
     int rows = 0;
 
     try{
@@ -97,6 +96,50 @@ public class UsuarioDao {
       preparedStatement.setString(1, usuario.getUsername());
       preparedStatement.setString(2, usuario.getPassword());
       preparedStatement.setString(3, usuario.getEmail());
+      rows = preparedStatement.executeUpdate();
+    } catch (SQLException e){
+      e.printStackTrace();
+    } finally{
+      org.blackloop.crud.persistence.Connection.close(preparedStatement);
+      org.blackloop.crud.persistence.Connection.close(connection);
+    }
+    return rows;
+  }
+
+  public int update(UsuarioDTO usuario){
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    int rows = 0;
+
+    try{
+      String query = "update usuario set username = ?, password = ?, email = ? where id = ?";
+      connection = org.blackloop.crud.persistence.Connection.getConnection();
+      preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setString(1, usuario.getUsername());
+      preparedStatement.setString(2, usuario.getPassword());
+      preparedStatement.setString(3, usuario.getEmail());
+      preparedStatement.setInt(4, usuario.getId());
+      rows = preparedStatement.executeUpdate();
+
+    } catch (SQLException e){
+      e.printStackTrace();
+    } finally{
+      org.blackloop.crud.persistence.Connection.close(preparedStatement);
+      org.blackloop.crud.persistence.Connection.close(connection);
+    }
+    return rows;
+  }
+
+  public int delete(UsuarioDTO usuario){
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    int rows = 0;
+
+    try{
+      String query = "delete from usuario where id = ?";
+      connection = org.blackloop.crud.persistence.Connection.getConnection();
+      preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setInt(1, usuario.getId());
       rows = preparedStatement.executeUpdate();
     } catch (SQLException e){
       e.printStackTrace();
