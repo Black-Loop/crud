@@ -115,10 +115,11 @@ public class UsuarioDao {
       String query = "update usuario set username = ?, password = ?, email = ? where id = ?";
       connection = org.blackloop.crud.persistence.Connection.getConnection();
       preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setInt(4, usuario.getId());
       preparedStatement.setString(1, usuario.getUsername());
       preparedStatement.setString(2, usuario.getPassword());
       preparedStatement.setString(3, usuario.getEmail());
-      preparedStatement.setInt(4, usuario.getId());
+
       rows = preparedStatement.executeUpdate();
 
     } catch (SQLException e){
@@ -130,7 +131,7 @@ public class UsuarioDao {
     return rows;
   }
 
-  public int delete(UsuarioDTO usuario){
+  public int delete(int usuarioId){
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     int rows = 0;
@@ -139,7 +140,7 @@ public class UsuarioDao {
       String query = "delete from usuario where id = ?";
       connection = org.blackloop.crud.persistence.Connection.getConnection();
       preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setInt(1, usuario.getId());
+      preparedStatement.setInt(1, usuarioId);
       rows = preparedStatement.executeUpdate();
     } catch (SQLException e){
       e.printStackTrace();

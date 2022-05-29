@@ -24,7 +24,7 @@ public class UsuarioBl {
     return dao.update(usuario) != 0;
   }
 
-  public boolean delete(UsuarioDTO usuario) {
-    return dao.delete(usuario) != 0;
+  public boolean delete(int usuarioId) {
+    return dao.delete(usuarioId) != 0;
   }
 }
