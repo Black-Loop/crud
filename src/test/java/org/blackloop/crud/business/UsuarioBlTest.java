@@ -1,5 +1,6 @@
 package org.blackloop.crud.business;
 
+import org.blackloop.crud.commons.dto.PersonaDTO;
 import org.blackloop.crud.commons.dto.UsuarioDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,11 +34,13 @@ class UsuarioBlTest {
 
   @Test
   void insert() {
+    PersonaBl personaBl = new PersonaBl();
+    PersonaDTO personaDTO = personaBl.findPersonaById(1);
     UsuarioDTO usuario = new UsuarioDTO();
-    usuario.setUsername("Borrego");
-    usuario.setPassword("mitiomegusta");
-    usuario.setEmail("tuborreguitomasna@email.com");
-    assertTrue(usuarioBl.insert(usuario), "Failed to insert");
+    usuario.setUsername("Pinwihaven");
+    usuario.setPassword("ayudaporfavor");
+    usuario.setEmail("pinwibeibi@email.com");
+    assertTrue(usuarioBl.insert(usuario, personaDTO.getId()), "Failed to insert");
   }
 
   @Test

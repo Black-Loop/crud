@@ -54,29 +54,30 @@ public class UsuarioDao {
 
     return usuariosList;
   }
-  public UsuarioDTO findById(int id){
+
+  public UsuarioDTO findById(int id) {
     UsuarioDTO usuario = null;
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
-    try{
+    try {
       String query = "select id, username, password, email from usuario where id = ?";
       connection = org.blackloop.crud.persistence.Connection.getConnection();
       preparedStatement = connection.prepareStatement(query);
       preparedStatement.setInt(1, id);
       resultSet = preparedStatement.executeQuery();
 
-      if(resultSet.next()){
+      if (resultSet.next()) {
         usuario = new UsuarioDTO();
         usuario.setId(resultSet.getInt("id"));
         usuario.setUsername(resultSet.getString("username"));
         usuario.setPassword(resultSet.getString("password"));
         usuario.setEmail(resultSet.getString("email"));
       }
-    } catch (SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
-    } finally{
+    } finally {
       org.blackloop.crud.persistence.Connection.close(resultSet);
       org.blackloop.crud.persistence.Connection.close(preparedStatement);
       org.blackloop.crud.persistence.Connection.close(connection);
@@ -84,34 +85,36 @@ public class UsuarioDao {
     return usuario;
   }
 
-  public int insert(UsuarioDTO usuario){
+  public int insert(UsuarioDTO usuario, int idPersona) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     int rows = 0;
 
-    try{
-      String query = "insert into usuario(username, password, email) values (?, ?, ?)";
+    try {
+      String query =
+          "insert into usuario(username, password, email, id_persona) values (?, ?, ?, ?)";
       connection = org.blackloop.crud.persistence.Connection.getConnection();
       preparedStatement = connection.prepareStatement(query);
       preparedStatement.setString(1, usuario.getUsername());
       preparedStatement.setString(2, usuario.getPassword());
       preparedStatement.setString(3, usuario.getEmail());
+      preparedStatement.setInt(4, idPersona);
       rows = preparedStatement.executeUpdate();
-    } catch (SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
-    } finally{
+    } finally {
       org.blackloop.crud.persistence.Connection.close(preparedStatement);
       org.blackloop.crud.persistence.Connection.close(connection);
     }
     return rows;
   }
 
-  public int update(UsuarioDTO usuario){
+  public int update(UsuarioDTO usuario) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     int rows = 0;
 
-    try{
+    try {
       String query = "update usuario set username = ?, password = ?, email = ? where id = ?";
       connection = org.blackloop.crud.persistence.Connection.getConnection();
       preparedStatement = connection.prepareStatement(query);
@@ -122,29 +125,29 @@ public class UsuarioDao {
 
       rows = preparedStatement.executeUpdate();
 
-    } catch (SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
-    } finally{
+    } finally {
       org.blackloop.crud.persistence.Connection.close(preparedStatement);
       org.blackloop.crud.persistence.Connection.close(connection);
     }
     return rows;
   }
 
-  public int delete(int usuarioId){
+  public int delete(int usuarioId) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     int rows = 0;
 
-    try{
+    try {
       String query = "delete from usuario where id = ?";
       connection = org.blackloop.crud.persistence.Connection.getConnection();
       preparedStatement = connection.prepareStatement(query);
       preparedStatement.setInt(1, usuarioId);
       rows = preparedStatement.executeUpdate();
-    } catch (SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
-    } finally{
+    } finally {
       org.blackloop.crud.persistence.Connection.close(preparedStatement);
       org.blackloop.crud.persistence.Connection.close(connection);
     }

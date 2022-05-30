@@ -16,8 +16,8 @@ public class UsuarioBl {
     return dao.findById(id);
   }
 
-  public boolean insert(UsuarioDTO usuario) {
-    return dao.insert(usuario) != 0;
+  public boolean insert(UsuarioDTO usuario, int idPersona) {
+    return dao.insert(usuario, idPersona) != 0;
   }
 
   public boolean update(UsuarioDTO usuario) {
